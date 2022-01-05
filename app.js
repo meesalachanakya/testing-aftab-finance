@@ -58,13 +58,14 @@ app.post("/register/", async (request, response) => {
   if (checkUser === undefined) {
     if (password.length < 6) {
       response.status(400);
-      response.send("Password is too short");
+      response.send({ error_msg: "Password is too short" });
     } else {
       const hashPass = await bcrypt.hash(password, 10);
       const createUserQuery = `
         INSERT INTO user(name,username,password)
         VALUES ('${name}','${username}','${hashPass}');`;
       await db.run(createUserQuery);
+      response.status(200);
       response.send({ success_msg: "User created successfully" });
     }
   } else {
@@ -87,6 +88,7 @@ app.post("/login/", async (request, response) => {
     if (isPassCorrect === true) {
       const payload = { username: username };
       const jwtToken = jwt.sign(payload, "SECRET");
+      response.status(200);
       response.send({ jwt_token: jwtToken });
     } else {
       response.status(400);
@@ -100,6 +102,7 @@ app.get("/", AuthenticationJWT, async (request, response) => {
   const getPostQuery = `
   SELECT * FROM postdata`;
   const userPost = await db.all(getPostQuery);
+  response.status(200);
   response.send(
     userPost.map((each) => ({
       userId: each.user_id,
@@ -127,5 +130,6 @@ app.post("/posts/add/", AuthenticationJWT, async (request, response) => {
 
   const dbResponse = await db.run(addPostQuery);
   const postId = dbResponse.lastID;
-  response.send({ postId: postId });
+  response.status(200);
+  response.send({ success_msg: "Post added successfully" });
 });
