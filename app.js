@@ -34,14 +34,14 @@ const AuthenticationJWT = (request, response, next) => {
   let jwtToken;
   if (authHeader === undefined) {
     response.status(401);
-    response.send("Invalid JWT Token");
+    response.send({ error_msg: "Invalid JWT Token" });
   } else {
     jwtToken = authHeader.split(" ")[1];
   }
   jwt.verify(jwtToken, "SECRET", (error, payload) => {
     if (error) {
       response.status(401);
-      response.send("Invalid JWT Token");
+      response.send({ error_msg: "Invalid JWT Token" });
     } else {
       request.username = payload.username;
       next();
@@ -65,11 +65,11 @@ app.post("/register/", async (request, response) => {
         INSERT INTO user(name,username,password)
         VALUES ('${name}','${username}','${hashPass}');`;
       await db.run(createUserQuery);
-      response.send("User created successfully");
+      response.send({ success_msg: "User created successfully" });
     }
   } else {
     response.status(400);
-    response.send("User already exists");
+    response.send({ error_msg: "User already exists" });
   }
 });
 
@@ -81,7 +81,7 @@ app.post("/login/", async (request, response) => {
   const userDetails = await db.get(getUserQuery);
   if (userDetails === undefined) {
     response.status(400);
-    response.send("Invalid user");
+    response.send({ error_msg: "Invalid user" });
   } else {
     const isPassCorrect = await bcrypt.compare(password, userDetails.password);
     if (isPassCorrect === true) {
@@ -90,7 +90,7 @@ app.post("/login/", async (request, response) => {
       response.send({ jwt_token: jwtToken });
     } else {
       response.status(400);
-      response.send("Invalid password");
+      response.send({ error_msg: "Invalid password" });
     }
   }
 });
