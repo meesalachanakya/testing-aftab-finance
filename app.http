@@ -2,8 +2,8 @@ POST http://localhost:3004/register/
 Content-Type: application/json
 
 {
-  "username": "aftab3131",
-  "password": "123456",
+  "username": "chan123",
+  "password": "chan123",
   "name": "Adam Richard"
 }
 ###
@@ -12,8 +12,8 @@ POST http://localhost:3004/login/
 Content-Type: application/json
 
 {
-  "username": "aftab313",
-  "password": "123456"
+  "username": "chan123",
+  "password": "chan123"
 }
 ###
 
