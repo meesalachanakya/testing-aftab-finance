@@ -1,4 +1,4 @@
-POST http://localhost:3001/register/
+POST http://localhost:3004/register/
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 ###
 
-POST http://localhost:3001/login/
+POST http://localhost:3004/login/
 Content-Type: application/json
 
 {
@@ -18,7 +18,7 @@ Content-Type: application/json
 ###
 
 
-GET http://localhost:3001/
+GET http://localhost:3004/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkYW1fcmljaGFyZCIsImlhdCI6MTYzNjYyODM0OX0.j4rXJYvJIxIH-N8VDHdLJAxmRIyJ_cVyXQEeSKgmpj4
 ###
 
